@@ -7,38 +7,39 @@
 
 
 import { CONST, rpc, sc, wallet, tx, u } from "@cityofzion/neon-core";
-import {transformGasDecimal,createTransaction}  from "./func.js" ;
+import {
+  checkToken,
+  checkSystemFee,
+  checkNetworkFee,
+  checkBalance,
+  performTransfer,
+  createTransferTransaction,
+  createContractTransaction}  from "./creatTx.js" ;
 
-
+const to = "F5aD3d4e846f33041180Aea32e11137009cC1734"   // evm address
  
+console.log( u.hash160(to))
+const toAccount =new wallet.Account(
+  "L2QTooFoDFyRFTxmtiVHt5CfsXfVnexdbENGDkkrrgTTryiLsPMG"
+)
 
 
-const rpcClient = new rpc.RPCClient("http://seed2t5.neo.org:20332");
+console.log(sc.ContractParam.hash160(toAccount.address))
+// createTransferTransaction()
+//   .then(checkToken)
+//   .then(checkNetworkFee)
+//   .then(checkSystemFee)
+//   .then(checkBalance)
+//   .then(performTransfer)
+//   .catch((err) => console.log(err));
 
-// console.log(inputs.fromAccount.address)
-// console.log(rpcClient)
-getGasTotalSupply()
-createTransaction()
 
-function getGasTotalSupply() {
-    console.log("--- Current GAS total supply ---");
-    // This is a hexstring
-    const gasTotalSupplyScript = new sc.ScriptBuilder()
-      .emitContractCall(sc.GasContract.INSTANCE.totalSupply())
-      .build();
-  
-    //We wrap the script in a HexString class so the SDK can handle the conversion to Base64 for us.
-    const payload = u.HexString.fromHex(gasTotalSupplyScript);
-    return rpcClient.invokeScript(payload).then((gasTotalSupplyResult) => {
-      const gasTotalSupply = gasTotalSupplyResult.stack[0].value;
-  
-      console.log(`Gas total supply is ${transformGasDecimal(gasTotalSupply)}`);
-      console.log(
-        `This action took ${transformGasDecimal(
-          gasTotalSupplyResult.gasconsumed
-        )} GAS to run.\n\n`
-      );
-    });
-  }
+createContractTransaction()
+  .then(checkToken)
+  .then(checkNetworkFee)
+  .then(checkSystemFee)
+  .then(checkBalance)
+  .then(performTransfer)
+  .catch((err) => console.log(err));
 
 
