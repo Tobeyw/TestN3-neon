@@ -15,7 +15,7 @@ import {
   performTransfer,
   createTransferTransaction,
   createContractTransaction}  from "./creatTx.js" ;
-
+import {deployContract} from "./deployContract.js";
 
 const toAccount =new wallet.Account(
   "L1QqQJnpBwbsPGAuutuzPTac8piqvbR1HRjrY5qHup48TBCBFe4g"
@@ -31,13 +31,14 @@ console.log(toAccount.address)
 //   .then(performTransfer)
 //   .catch((err) => console.log(err));
 
+deployContract()
 
-createContractTransaction()
-  .then(checkToken)
-  .then(checkNetworkFee)
-  .then(checkSystemFee)
-  .then(checkBalance)
-  .then(performTransfer)
-  .catch((err) => console.log(err));
+// createContractTransaction()
+//   .then(checkToken)
+//   .then(checkNetworkFee)
+//   .then(checkSystemFee)
+//   .then(checkBalance)
+//   .then(performTransfer)
+//   .catch((err) => console.log(err));
 
 
