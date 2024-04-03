@@ -1,4 +1,4 @@
-import { CONST, rpc, sc, wallet, tx, u } from "@cityofzion/neon-core";
+import { CONST, rpc, sc, wallet, tx, u } from "@cityofzion/neon-js";
 
 const inputs = {
   fromAccount: new wallet.Account(
@@ -9,7 +9,7 @@ const inputs = {
   ),
   tokenScriptHash: CONST.NATIVE_CONTRACT_HASH.GasToken,
   bridgeContract: "64789bde6fd6c0b9b26a1d84b07fb679e0f3639f",
-  amountToTransfer: 2500000000,
+  amountToTransfer: 200000000,
   systemFee: 0,
   networkFee: 0,
   networkMagic: CONST.MAGIC_NUMBER.TestNet,//894710606, 
@@ -17,6 +17,7 @@ const inputs = {
 };
 
 const vars = {};
+
 
 const rpcClient = new rpc.RPCClient(inputs.nodeUrl);
 //=============================createContractTransaction===================================
@@ -86,7 +87,7 @@ export async function createTransferTransaction() {
     signers: [
       {
         account: inputs.fromAccount.scriptHash,
-        scopes: tx.WitnessScope.CalledByEntry,
+        scopes: tx.WitnessScope.Global,
       },
     ],
     validUntilBlock: currentHeight + 1000,
