@@ -17,12 +17,10 @@ import {
   createContractTransaction}  from "./creatTx.js" ;
 import {deployContract} from "./deployContract.js";
 
-const toAccount =new wallet.Account(
-  "L1QqQJnpBwbsPGAuutuzPTac8piqvbR1HRjrY5qHup48TBCBFe4g"
-)
+import {getDataFromContract} from "./readData.js";
 
 
-console.log(toAccount.address)
+
 // createTransferTransaction()
 //   .then(checkToken)
 //   .then(checkNetworkFee)
@@ -31,7 +29,8 @@ console.log(toAccount.address)
 //   .then(performTransfer)
 //   .catch((err) => console.log(err));
 
-deployContract()
+//deployContract()
+getDataFromContract()
 
 // createContractTransaction()
 //   .then(checkToken)
