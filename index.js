@@ -15,7 +15,6 @@ import {
   performTransfer,
   createTransferTransaction,
   createContractTransaction}  from "./creatTx.js" ;
-import {deployContract} from "./deployContract.js";
 
 import {getDataFromContract} from "./readData.js";
 
@@ -29,15 +28,15 @@ import {getDataFromContract} from "./readData.js";
 //   .then(performTransfer)
 //   .catch((err) => console.log(err));
 
-//deployContract()
-getDataFromContract()
+ 
+//getDataFromContract()
 
-// createContractTransaction()
-//   .then(checkToken)
-//   .then(checkNetworkFee)
-//   .then(checkSystemFee)
-//   .then(checkBalance)
-//   .then(performTransfer)
-//   .catch((err) => console.log(err));
+createContractTransaction()
+  .then(checkToken)
+  .then(checkNetworkFee)
+  .then(checkSystemFee)
+  .then(checkBalance)
+  .then(performTransfer)
+  .catch((err) => console.log(err));
 
 

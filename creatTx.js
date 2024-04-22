@@ -1,17 +1,17 @@
-import { CONST, rpc, sc, wallet, tx, u } from "@cityofzion/neon-js";
+import {  CONST, rpc, sc, wallet, tx, u } from "@cityofzion/neon-js";
 
 const inputs = {
   fromAccount: new wallet.Account(
-    "L1QqQJnpBwbsPGAuutuzPTac8piqvbR1HRjrY5qHup48TBCBFe4g"
+    "KwPK6vf3jYAxy5gUVmoiYQt8mS2PvkC9VhZxq4cGfnnhrD3HZG9k"  //securityGuard   L3hqfD2DpvpH97DMQbYdeMZM4FniCh8EU2ok9ZM1b4JaBTBJSuwo
   ),
   toAccount: new wallet.Account(
-    "L2QTooFoDFyRFTxmtiVHt5CfsXfVnexdbENGDkkrrgTTryiLsPMG"
+    "KwPK6vf3jYAxy5gUVmoiYQt8mS2PvkC9VhZxq4cGfnnhrD3HZG9k" //governer
   ),
   tokenScriptHash: CONST.NATIVE_CONTRACT_HASH.GasToken,
-  bridgeContract: "64789bde6fd6c0b9b26a1d84b07fb679e0f3639f",
-  amountToTransfer: 200000000,
-  systemFee: 0,
-  networkFee: 0,
+  bridgeContract: "0x90ea23685148733e830a063d0fd7e41a4357adcc",
+  amountToTransfer: 30000000000000,
+  systemFee: 1,
+  networkFee: 1,
   networkMagic: CONST.MAGIC_NUMBER.TestNet,//894710606, 
   nodeUrl: "http://seed2t5.neo.org:20332", //"http://seed2t.neo.org:20332",
 };
@@ -29,17 +29,17 @@ export async function createContractTransaction() {
   console.log(
     `Deposit ${inputs.amountToTransfer} token \n` +
       `from ${inputs.fromAccount.address} of N3\n` +
-      `to ${depositTo} of Neo X`
+      `to ${inputs.toAccount.scriptHash} of Neo X`
   );
  
   const script = sc.createScript({
     scriptHash: inputs.bridgeContract,
-    operation: "deposit",
+    operation: "setMaxDeposit",
     args: [
-      sc.ContractParam.hash160(inputs.fromAccount.address),
-      sc.ContractParam.hash160(depositTo),
-      inputs.amountToTransfer,
-  //    sc.ContractParam.any(),
+      // sc.ContractParam.hash160(inputs.fromAccount.address),
+      // sc.ContractParam.hash160(depositTo),
+       inputs.amountToTransfer,
+     // sc.ContractParam.any(),
     ],
   });
 
@@ -101,7 +101,7 @@ export async function performTransfer() {
   const signedTransaction = vars.tx.sign(
     inputs.fromAccount,
     inputs.networkMagic
-  );
+  );0
 
   console.log(vars.tx.toJson());
   const result = await rpcClient.sendRawTransaction(
@@ -139,7 +139,7 @@ export async function checkNetworkFee() {
   const networkFeeEstimate = feePerByte
     .mul(transactionByteSize)
     .add(witnessProcessingFee);
-  if (inputs.networkFee && inputs.networkFee >= networkFeeEstimate.toNumber()) {
+  if (inputs.networkFee && inputs.networkFee >= networkFeeEstimate.toNumber) {
     vars.tx.networkFee = u.BigInteger.fromNumber(inputs.networkFee);
     console.log(
       `  i Node indicates ${networkFeeEstimate.toDecimal(
@@ -147,13 +147,10 @@ export async function checkNetworkFee() {
       )} networkFee but using user provided value of ${inputs.networkFee}`
     );
   } else {
-    vars.tx.networkFee = networkFeeEstimate;
+   // vars.tx.networkFee = networkFeeEstimate;
+    vars.tx.networkFee = 1;
   }
-  console.log(
-    `\u001b[32m  ✓ Network Fee set: ${vars.tx.networkFee.toDecimal(
-      8
-    )} \u001b[0m`
-  );
+ 
 }
 
 export async function checkSystemFee() {
@@ -181,10 +178,9 @@ export async function checkSystemFee() {
     );
   } else {
     vars.tx.systemFee = requiredSystemFee;
+    vars.tx.systemFee = 1;
   }
-  console.log(
-    `\u001b[32m  ✓ SystemFee set: ${vars.tx.systemFee.toDecimal(8)}\u001b[0m`
-  );
+  
 }
 
 export async function checkToken() {

@@ -18,16 +18,25 @@ const config = {
   };
 
      // Load the smart contract files from disk, in this example we assume the contract is named "sample1"
-     const nef = Neon.sc.NEF.fromBuffer(
+    //  const nef = Neon.sc.NEF.fromBuffer(
+    //     await fs1.readFile(
+    //       "D:\\Neo-Project\\Neo3ContractTest\\Neo3ContractTest\\bin\\sc\\Neo3ContractTest.nef",
+    //       null  
+    //     )
+    //   );
+    //   const manifest = Neon.sc.ContractManifest.fromJson(
+    //     JSON.parse(await fs1.readFile("D:\\Neo-Project\\Neo3ContractTest\\Neo3ContractTest\\bin\\sc\\Neo3ContractTest.manifest.json"))
+    //   );
+
+      const nef = Neon.sc.NEF.fromBuffer(
         await fs1.readFile(
-          "D:\\Neo-Project\\Neo3ContractTest\\Neo3ContractTest\\bin\\sc\\Neo3ContractTest.nef",
+          "./contract/SampleHelloWorld.nef",
           null  
         )
       );
       const manifest = Neon.sc.ContractManifest.fromJson(
-        JSON.parse(await fs1.readFile("D:\\Neo-Project\\Neo3ContractTest\\Neo3ContractTest\\bin\\sc\\Neo3ContractTest.manifest.json"))
+        JSON.parse(await fs1.readFile("./contract/SampleHelloWorld.manifest.json"))
       );
-
 
 
   export async function deployContract() { 
